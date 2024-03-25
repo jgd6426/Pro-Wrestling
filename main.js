@@ -78,7 +78,7 @@ const round = (wA, wB) => {
         console.log(`${wB.name}'s health is below 0. ${wA.name} wins!`);
         // add the winning wrestler the winners array
         matchWinners.push(wA);
-        return;
+        return wA;
     }
 
     // wrestler B goes second
@@ -92,7 +92,7 @@ const round = (wA, wB) => {
         console.log(`${wA.name}'s health is below 0. ${wB.name} wins!`);
         // add the winning wrestler the winners array
         matchWinners.push(wB);
-        return;
+        return wB;
     }
 }
 
@@ -101,41 +101,73 @@ const match = (wA, wB, roundCount) => {
     let wBMaxHealth = wB.health;
 
     console.log(`------------Round ${roundCount}--------------`);
-    round(wA, wB);
+    let winner = round(wA, wB);
 
     // if either wrestler's health is above 0, continue more rounds
     if (wA.health > 0 && wB.health > 0) {
         match(wA, wB, roundCount + 1);
-    }
-
+    };
     // reset wrestler's healths after the match
+    // and return the winner
     wA.health = wAMaxHealth;
     wB.health = wBMaxHealth;
+    return wAMaxHealth, wBMaxHealth, winner;
 }
 
 /*
- * Main function to run the matches rounds and tournament
- * param: none
+ * Run the Tournament and each match based on wrestlers from a given array
+ * param: wArray, array of wrestler objects
  * returns: results of each match, round, and the tournament winner
  */
+const tournament = (wArray) => {
+    if (wArray.length == 4) {
+        console.log(`Match 1: ${wArray[0].name} vs. ${wArray[1].name}`);
+        match(wArray[0], wArray[1], 1);
+
+        console.log("\n\n");
+
+        console.log(`Match 2: ${wArray[2].name} vs. ${wArray[3].name}`);
+        match(wArray[2], wArray[3], 1);
+
+        console.log("\n");
+        console.log(`Winners: ${matchWinners[0].name}, ${matchWinners[0].health}, ${matchWinners[1].name}, ${matchWinners[1].health}`);
+        console.log("\n\n");
+
+        console.log(`Match 3: ${matchWinners[0].name} vs. ${matchWinners[1].name}`);
+        let winner = match(matchWinners[0], matchWinners[1], 1);
+
+        console.log(`${winner.name} wins the tournament!`);
+    }
+    // if (wArray.length == 3) {
+    //     console.log(`Match 1: ${wArray[0].name} vs. ${wArray[1].name}`);
+    //     match(wArray[0], awArray[1], 1);
+
+    //     console.log("\n\n");
+
+    //     console.log(`${wArray[2].name}`);
+    //     match(wArray[2], wArray[3], 1);
+
+    //     // console.log("\n");
+    //     // console.log(`Winners: ${matchWinners[0].name}, ${matchWinners[0].health}, ${matchWinners[1].name}, ${matchWinners[1].health}`);
+    //     console.log("\n\n");
+
+    //     console.log(`Match 3: ${matchWinners[0].name} vs. ${matchWinners[1].name}`);
+    //     match(matchWinners[0], matchWinners[1], 1);
+    // }
+}
+
+/*
+ * Main function to run the tournaments with wrestler arrays of different lengths
+ */
 const main = () => {
-    // console.log(`${matchWinners[0].name}, ${matchWinners[1].name}, ${matchWinners[2].name}, ${matchWinners[3].name}`);
+    console.log("-----Tournament 1: 4 wrestlers------\n");
+    tournament(wrestlers);
 
-    console.log(`Match 1: ${wrestlers[0].name} vs. ${wrestlers[1].name}`);
-    match(wrestlers[0], wrestlers[1], 1);
+    // console.log("\n\n-----Tournament 2: 3 wrestlers------\n");
+    // tournament(wrestlers2);
 
-    // console.log(`Winners - first loser: ${matchWinners[0].name}, ${matchWinners[1].name}, ${matchWinners[2].name}`);
-    console.log("\n\n");
-
-    console.log(`Match 2: ${wrestlers[2].name} vs. ${wrestlers[3].name}`);
-    match(wrestlers[2], wrestlers[3], 1);
-
-    // console.log("\n");
-    // console.log(`Winners: ${matchWinners[0].name}, ${matchWinners[0].health}, ${matchWinners[1].name}, ${matchWinners[1].health}`);
-    console.log("\n\n");
-
-    console.log(`Match 3: ${matchWinners[0].name} vs. ${matchWinners[1].name}`);
-    match(matchWinners[0], matchWinners[1], 1);
+    // console.log("\n\n-----Tournament 3: 1 wrestler------\n");
+    // tournament(wrestlers3);
 }
 
 window.onload = () => {
