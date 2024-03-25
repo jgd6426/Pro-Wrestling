@@ -1,6 +1,7 @@
 import { wrestlers, wrestlers2, wrestlers3 } from "./test.js";
 
-const matchWinners = [];
+// Array to store the winning wrestler of each match to then go against each other
+let matchWinners = [];
 
 /*
  * Choose a random move from a given wrestler object
@@ -75,6 +76,7 @@ const round = (wA, wB) => {
     // declare the winner
     if (wB.health == 0) {
         console.log(`${wB.name}'s health is below 0. ${wA.name} wins!`);
+        // add the winning wrestler the winners array
         matchWinners.push(wA);
         return;
     }
@@ -88,12 +90,16 @@ const round = (wA, wB) => {
     // declare the winner
     if (wA.health == 0) {
         console.log(`${wA.name}'s health is below 0. ${wB.name} wins!`);
+        // add the winning wrestler the winners array
         matchWinners.push(wB);
         return;
     }
 }
 
 const match = (wA, wB, roundCount) => {
+    let wAMaxHealth = wA.health;
+    let wBMaxHealth = wB.health;
+
     console.log(`------------Round ${roundCount}--------------`);
     round(wA, wB);
 
@@ -101,6 +107,10 @@ const match = (wA, wB, roundCount) => {
     if (wA.health > 0 && wB.health > 0) {
         match(wA, wB, roundCount + 1);
     }
+
+    // reset wrestler's healths after the match
+    wA.health = wAMaxHealth;
+    wB.health = wBMaxHealth;
 }
 
 /*
@@ -109,14 +119,19 @@ const match = (wA, wB, roundCount) => {
  * returns: results of each match, round, and the tournament winner
  */
 const main = () => {
+    // console.log(`${matchWinners[0].name}, ${matchWinners[1].name}, ${matchWinners[2].name}, ${matchWinners[3].name}`);
+
     console.log(`Match 1: ${wrestlers[0].name} vs. ${wrestlers[1].name}`);
     match(wrestlers[0], wrestlers[1], 1);
 
+    // console.log(`Winners - first loser: ${matchWinners[0].name}, ${matchWinners[1].name}, ${matchWinners[2].name}`);
     console.log("\n\n");
 
     console.log(`Match 2: ${wrestlers[2].name} vs. ${wrestlers[3].name}`);
     match(wrestlers[2], wrestlers[3], 1);
 
+    // console.log("\n");
+    // console.log(`Winners: ${matchWinners[0].name}, ${matchWinners[0].health}, ${matchWinners[1].name}, ${matchWinners[1].health}`);
     console.log("\n\n");
 
     console.log(`Match 3: ${matchWinners[0].name} vs. ${matchWinners[1].name}`);
