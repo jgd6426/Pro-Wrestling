@@ -121,11 +121,11 @@ const match = (wA, wB, roundCount) => {
 
     if (wA.health <= 0 || wB.health <= 0) {
         // return the winner of the match
-        console.log(`winner: ${winner.name}`);
+        // console.log(winner.name);
         return winner;
     }
-    // else continure more rounds
-    match(wA, wB, roundCount + 1);
+    // else continue more rounds
+    return match(wA, wB, roundCount + 1);
 };
 
 /*
@@ -135,6 +135,9 @@ const match = (wA, wB, roundCount) => {
  * returns: results of each match, round, and the tournament winner
  */
 const tournament = (wArray, healthArray) => {
+    // reset matchWinners array at the beginning of each tournament
+    matchWinners = []; 
+
     if (wArray.length == 4) {
         console.log(`Match 1: ${wArray[0].name} vs. ${wArray[1].name}`);
         match(wArray[0], wArray[1], 1);
@@ -144,18 +147,18 @@ const tournament = (wArray, healthArray) => {
         console.log(`Match 2: ${wArray[2].name} vs. ${wArray[3].name}`);
         match(wArray[2], wArray[3], 1);
 
-        // reset wrestler's healths before the final match
+        // reset wrestler healths before the final match
         resetHealth(matchWinners[0], healthArray);
         resetHealth(matchWinners[1], healthArray);
 
-        console.log("\n");
-        console.log(`Winners: ${matchWinners[0].name}, ${matchWinners[0].health}, ${matchWinners[1].name}, ${matchWinners[1].health}`);
+        // console.log("\n");
+        // console.log(`Winners: ${matchWinners[0].name}, ${matchWinners[0].health}, ${matchWinners[1].name}, ${matchWinners[1].health}`);
         console.log("\n\n");
 
         console.log(`Match 3: ${matchWinners[0].name} vs. ${matchWinners[1].name}`);
         let finalWinner = match(matchWinners[0], matchWinners[1], 1);
 
-        // console.log(finalWinner + ' wins the tournament');
+        // console.log(finalWinner);
         console.log(`${finalWinner.name} wins the tournament`);
     }
     else if (wArray.length == 3) {
@@ -190,28 +193,16 @@ const tournament = (wArray, healthArray) => {
  * Main function to run the tournaments with wrestler arrays of different lengths
  */
 const main = (array) => {
-    // remove any empty objects
+    // remove any empty objects from the given array
     // code from https://surajsharma.net/blog/javascript-remove-empty-objects-from-array
-    // let roster1 = wrestlers1.filter(obj => !(Object.keys(obj).length === 0));
-    // let roster2 = wrestlers2.filter(obj => !(Object.keys(obj).length === 0));
-    // let roster3 = wrestlers3.filter(obj => !(Object.keys(obj).length === 0));
     let roster = array.filter(obj => !(Object.keys(obj).length === 0));
+
     // make an array to store each wrestler and their original healths
     // code from: https://www.geeksforgeeks.org/how-to-create-an-array-of-partial-objects-from-another-array-in-javascript/
     let originalHealths = array.map(({name, health}) => ({name, health}));
 
-    // console.log("-----Tournament 1: 1 wrestler------\n");
-    // tournament(roster1);
-
-    // console.log("\n\n-----Tournament 2: 2 wrestlers------\n");
-    // tournament(roster2);
-
-    // console.log("\n\n-----Tournament 3: 3 wrestlers------\n");
-    // tournament(roster3);
-
     console.log(`\n\n----------Tournament: ${array.length} wrestlers-----------\n`);
     tournament(roster, originalHealths);
-    console.log(originalHealths);
 };
 
 window.onload = () => {
