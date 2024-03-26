@@ -1,3 +1,5 @@
+// Asked ChatGPT to provide wrestler objects for testing purposes
+
 const wrestlers4 = [
     {
         name: 'John Cena',
@@ -76,7 +78,7 @@ const wrestlers1 = [
             { name: 'Curb Stomp (finisher)', damage: 100, type: 'finisher' }
         ]
     },
-    {}
+    {} // Test if array contains an empty object
 ];
 const wrestlers2 = [
     {
@@ -88,6 +90,7 @@ const wrestlers2 = [
             { name: 'Curb Stomp (finisher)', damage: 100, type: 'finisher' }
         ]
     },
+    // Wrestler object example from assessment doc
     {
         name: 'Wrestler',
         health: 100,

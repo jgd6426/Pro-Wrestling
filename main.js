@@ -44,36 +44,25 @@ const calcHealth = (wrestler, move) => {
     // Moves with the type ‘finisher’ should have a 50% chance of failing 
     // unless their opponent’s health is less than or equal to 45.
     if (move.type === 'finisher' && wrestler.health > 45) {
-        let chance = Math.floor(Math.random() * 2); // return either 0 or 1
-        // if chance of 1, move succeds
-        if (chance == 1) {
-            console.log(`${move.name} succeeded.`);
-            let newHealth = wrestler.health - move.damage;
-            if (newHealth < 0) {
-                return wrestler.health = 0;
-            }
-            else {
-                return wrestler.health = newHealth;
-            }
-        }
-        // if chance of 0 move fails
-        else {
+        const chance = Math.floor(Math.random() * 2); // return either 0 or 1
+        // if chance of 0, move fails
+        if (chance != 1) {
             console.log(`${move.name} failed.`);
             return wrestler.health;
         }
-    }
-    // All other moves including finisher move if wrestler's health is <= 45
-    // move damage subtracted from wrestler's health
-    else {
-        let newHealth = wrestler.health - move.damage;
-        // No negative health, just return 0
-        if (newHealth < 0) {
-            newHealth = 0;
-            return wrestler.health = newHealth;
-        }
         else {
-            return wrestler.health = newHealth;
+            console.log(`${move.name} successful.`)
         }
+    }
+    // All other moves including finisher move if wrestler's health is <= 45 or the chance = 1/succeeds
+    // move damage subtracted from wrestler's health
+    const newHealth = wrestler.health - move.damage;
+    // No negative health, just return 0
+    if (newHealth < 0) {
+        return wrestler.health = 0;
+    }
+    else {
+        return wrestler.health = newHealth;
     }
 };
 
@@ -85,7 +74,7 @@ const calcHealth = (wrestler, move) => {
  */
 const round = (wA, wB) => {
     // wrestler A goes first
-    let moveA = randomMove(wA);
+    const moveA = randomMove(wA);
     console.log(`${wA.name} performs ${moveA.name} on ${wB.name}. ${wB.name}'s health: ${calcHealth(wB, moveA)}`);
 
     // if the wrestler's health reaches 0 
@@ -100,7 +89,7 @@ const round = (wA, wB) => {
     }
 
     // wrestler B goes second
-    let moveB = randomMove(wB);
+    const moveB = randomMove(wB);
     console.log(`${wB.name} performs ${moveB.name} on ${wA.name}. ${wA.name}'s health: ${calcHealth(wA, moveB)}`);
 
     // if the wrestler's health reaches 0 
@@ -117,7 +106,7 @@ const round = (wA, wB) => {
 
 const match = (wA, wB, roundCount) => {
     console.log(`------------Round ${roundCount}--------------`);
-    let winner = round(wA, wB);
+    const winner = round(wA, wB);
 
     if (wA.health <= 0 || wB.health <= 0) {
         // return the winner of the match
@@ -131,12 +120,12 @@ const match = (wA, wB, roundCount) => {
 /*
  * Run the Tournament and each match based on wrestlers from a given array
  * param: wArray, array of wrestler objects
- * param: originalArray, the original array given to reference original health value
+ * param: healthArray, array of wrestler names and original health values
  * returns: results of each match, round, and the tournament winner
  */
 const tournament = (wArray, healthArray) => {
     // reset matchWinners array at the beginning of each tournament
-    matchWinners = []; 
+    matchWinners = [];
 
     if (wArray.length == 4) {
         console.log(`Match 1: ${wArray[0].name} vs. ${wArray[1].name}`);
@@ -156,7 +145,7 @@ const tournament = (wArray, healthArray) => {
         console.log("\n\n");
 
         console.log(`Match 3: ${matchWinners[0].name} vs. ${matchWinners[1].name}`);
-        let finalWinner = match(matchWinners[0], matchWinners[1], 1);
+        const finalWinner = match(matchWinners[0], matchWinners[1], 1);
 
         // console.log(finalWinner);
         console.log(`${finalWinner.name} wins the tournament`);
@@ -174,13 +163,14 @@ const tournament = (wArray, healthArray) => {
         console.log("\n\n");
 
         console.log(`Match 3: ${matchWinners[0].name} vs. ${matchWinners[1].name}`);
-        let finalWinner = match(matchWinners[0], matchWinners[1], 1);
+        const finalWinner = match(matchWinners[0], matchWinners[1], 1);
 
-        // console.log(`${finalWinner} wins the tournament!`);
+        console.log(`${finalWinner.name} wins the tournament!`);
     }
     else if (wArray.length == 2) {
         console.log(`Match 1: ${wArray[0].name} vs. ${wArray[1].name}`);
-        let finalWinner = matchwinners[0];
+        // first/final match
+        const finalWinner = match(wArray[0], wArray[1], 1);;
         console.log(`${finalWinner.name} wins the tournament!`);
     }
     else if (wArray.length == 1) {
@@ -195,17 +185,20 @@ const tournament = (wArray, healthArray) => {
 const main = (array) => {
     // remove any empty objects from the given array
     // code from https://surajsharma.net/blog/javascript-remove-empty-objects-from-array
-    let roster = array.filter(obj => !(Object.keys(obj).length === 0));
+    const roster = array.filter(obj => !(Object.keys(obj).length === 0));
 
     // make an array to store each wrestler and their original healths
     // code from: https://www.geeksforgeeks.org/how-to-create-an-array-of-partial-objects-from-another-array-in-javascript/
-    let originalHealths = array.map(({name, health}) => ({name, health}));
+    const originalHealths = array.map(({ name, health }) => ({ name, health }));
 
-    console.log(`\n\n----------Tournament: ${array.length} wrestlers-----------\n`);
+    console.log(`\n\n----------Tournament: ${roster.length} wrestlers-----------\n`);
     tournament(roster, originalHealths);
 };
 
 window.onload = () => {
+    main(wrestlers1);
+    main(wrestlers2);
+    main(wrestlers3);
     main(wrestlers4);
 };
 
