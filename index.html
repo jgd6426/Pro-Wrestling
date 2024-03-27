@@ -1,13 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pro Wrestling Tournament</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
     <script type="module" src="main.js"></script>
 </head>
+
 <body>
-    
+    <header>
+        <section class="hero is-small is-warning">
+            <div class="hero-body">
+                <h1 class="title">Pro Wrestling Tournament</h1>
+            </div>
+        </section>
+    </header>
+    <main>
+        <section id="form">
+            <section id="fileUpload">
+                <h2 class="px-4">Upload a JSON file of wrestlers:</h2>
+                <!-- https://bulma.io/documentation/form/file/ -->
+                <div class="file has-name is-fullwidth px-4 theme-dark">
+                    <label class="file-label">
+                        <input class="file-input" type="file" name="resume" />
+                        <span class="file-cta">
+                            <span class="file-icon">
+                                <i class="fas fa-upload"></i>
+                            </span>
+                            <span class="file-label"> Choose a file… </span>
+                        </span>
+                        <span class="file-name"> filename.json </span>
+                    </label>
+                </div>
+            </section>
+            <section id="submitBtn">
+                <!-- https://bulma.io/documentation/elements/button/ -->
+                <button class="button is-warning">Start Tournament!</button>
+            </section>
+        </section>
+        <section id="bracket">
+            <!-- cards for each match -->
+            <div class="columns">
+                <div class="column">
+                    <div class="card theme-light">
+                        <header class="card-header">
+                            <p class="card-header-title">
+                                Match 1
+                                <!-- https://bulma.io/documentation/components/dropdown/ -->
+                                <div class="dropdown is-hoverable">
+                                    <div class="dropdown-trigger">
+                                        <button class="button" aria-haspopup="true" aria-controls="dropdown-menu4">
+                                            <span>...</span>
+                                        </button>
+                                    </div>
+                                    <div class="dropdown-menu" id="dropdown-menu1" role="menu">
+                                        <div class="dropdown-content">
+                                            <div class="dropdown-item">
+                                                <p id="match1Details">
+                                                    Match details.
+                                                    Moves made and health status each round.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </p>
+                        </header>
+                        <div class="card-content">
+                            <div class="content">
+                                <div class="column">
+                                    <p id="wA" class="is-size-6 is-color-warning">Wrestler 1</p>
+                                    <p class="is-size-6">vs</p>
+                                    <p id="wB" class="is-size-6">Wrestler 2</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <div class="card theme-light">
+                        <header class="card-header">
+                            <p class="card-header-title">
+                                Match 2
+                                <div class="dropdown is-hoverable">
+                                    <div class="dropdown-trigger">
+                                        <button class="button" aria-haspopup="true" aria-controls="dropdown-menu4">
+                                            <span>...</span>
+                                        </button>
+                                    </div>
+                                    <div class="dropdown-menu" id="dropdown-menu1" role="menu">
+                                        <div class="dropdown-content">
+                                            <div class="dropdown-item">
+                                                <p id="match2Details">
+                                                    Match details.
+                                                    Moves made and health status each round.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </p>
+                        </header>
+                        <div class="card-content">
+                            <div class="content">
+                                <div class="column">
+                                    <p id="wA" class="is-size-6 is-color-warning">Wrestler 1</p>
+                                    <p class="is-size-6">vs</p>
+                                    <p id="wB" class="is-size-6">Wrestler 2</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  -->
+                <div class="column">
+                    <div class="card theme-light">
+                        <header class="card-header">
+                            <p class="card-header-title">
+                                Match 3
+                                <div class="dropdown is-hoverable">
+                                    <div class="dropdown-trigger">
+                                        <button class="button" aria-haspopup="true" aria-controls="dropdown-menu4">
+                                            <span>...</span>
+                                        </button>
+                                    </div>
+                                    <div class="dropdown-menu" id="dropdown-menu1" role="menu">
+                                        <div class="dropdown-content">
+                                            <div class="dropdown-item">
+                                                <p id="match3Details">
+                                                    Match details.
+                                                    Moves made and health status each round.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </p>
+                        </header>
+                        <div class="card-content">
+                            <div class="content">
+                                <div class="column">
+                                    <p id="wA" class="is-size-6 is-color-warning">Wrestler 1</p>
+                                    <p class="is-size-6">vs</p>
+                                    <p id="wB" class="is-size-6">Wrestler 2</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  -->
+                <div class="column">
+                    <div class="card theme-light">
+                        <header class="card-header">
+                            <p class="card-header-title">
+                                Winner
+                            </p>
+                        </header>
+                        <div class="card-content">
+                            <div class="content">
+                                <p id="wA" class="is-size-6 is-color-warning">
+                                    Wrestler 1
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 </body>
+
 </html>

@@ -1,34 +1,66 @@
-/* Reset default styles */
 body {
     margin: 0;
     padding: 0;
+    background-color: #fffef8;
+    font-family: 'Krona One', sans-serif;
 }
 
-/* Set font and background color */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
-}
-
-/* Center content */
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+main {
+    margin: 0 auto;
+    width: 100vw;
     height: 100vh;
+    padding: 20px 40px;
+    font-family: 'Krona One', sans-serif;
 }
 
-/* Style headings */
 h1 {
-    font-size: 24px;
+    font-family: 'Krona One', sans-serif;
+    font-size: 18px;
     font-weight: bold;
     color: #333;
+    text-align: center;
+    padding-top: 25px;
 }
 
 h2 {
+    font-family: 'Krona One', sans-serif;
     font-size: 18px;
     font-weight: bold;
-    color: #666;
+    color: rgb(70, 66, 91);
 }
 
-/* Add more styles as needed */
+#form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+#fileUpload {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#submitBtn {
+    cursor: pointer;
+}
+
+.card {
+    width: 250px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.card header {
+    align-items: center;
+}
+
+#bracket, .columns{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+}

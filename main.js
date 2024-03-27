@@ -1,6 +1,7 @@
 import { wrestlers1, wrestlers2, wrestlers3, wrestlers4 } from "./test.js";
 
 // Array to store the winning wrestler of each match to then go against each other
+let myArray;
 let matchWinners = [];
 
 /*
@@ -177,7 +178,30 @@ const tournament = (wArray, healthArray) => {
         console.log('Only one wrestler showed up.');
         console.log(`${wArray[0].name} automatically wins the tournament!`)
     }
+    // if the array is empty
+    else if (wArray.length == 0) {
+        console.log('No wrestlers showed up.');
+        console.log('No winner declared.')
+    } 
+    // if the array has more than 4 wrestlers
+    else {
+        console.log('Too many wrestlers showed up.');
+        console.log('Only 4 wrestlers can compete in a tournament.');
+    }
 };
+
+/*
+ * Read and return the data from a JSON file
+ */
+const getDataFromJSON = (filename) => {
+    fetch(filename)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            myArray = data;
+            return data;
+        });
+}
 
 /*
  * Main function to run the tournaments with wrestler arrays of different lengths
@@ -196,9 +220,13 @@ const main = (array) => {
 };
 
 window.onload = () => {
-    main(wrestlers1);
-    main(wrestlers2);
-    main(wrestlers3);
+    // main(wrestlers1);
+    // main(wrestlers2);
+    // main(wrestlers3);
     main(wrestlers4);
+
+    // getDataFromJSON('wrestlerArray.json');
+    // main(myArray);
+    // console.log(myArray);
 };
 
