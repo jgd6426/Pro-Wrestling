@@ -57,6 +57,13 @@ h2 {
     align-items: center;
 }
 
+.dropdown-content {
+    justify-content: start;
+    align-items: start;
+    text-align: left;
+    width: 400px;
+}
+
 #bracket, .columns{
     display: flex;
     flex-direction: row;

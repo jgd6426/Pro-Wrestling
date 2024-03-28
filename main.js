@@ -1,7 +1,8 @@
-import { wrestlers1, wrestlers2, wrestlers3, wrestlers4 } from "./test.js";
+import { wrestlers1, wrestlers2, wrestlers3, wrestlers4 } from "./test.js"; // import the test data
 
+// Array to store the wrestlers from the uploaded file
+let wrestlers = [];
 // Array to store the winning wrestler of each match to then go against each other
-let myArray;
 let matchWinners = [];
 
 /*
@@ -76,7 +77,8 @@ const calcHealth = (wrestler, move) => {
 const round = (wA, wB) => {
     // wrestler A goes first
     const moveA = randomMove(wA);
-    console.log(`${wA.name} performs ${moveA.name} on ${wB.name}. ${wB.name}'s health: ${calcHealth(wB, moveA)}`);
+    const turn1 = `${wA.name} performs ${moveA.name} on ${wB.name}. ${wB.name}'s health: ${calcHealth(wB, moveA)}`;
+    console.log(turn1);
 
     // if the wrestler's health reaches 0 
     // end the move, round, and match
@@ -91,7 +93,8 @@ const round = (wA, wB) => {
 
     // wrestler B goes second
     const moveB = randomMove(wB);
-    console.log(`${wB.name} performs ${moveB.name} on ${wA.name}. ${wA.name}'s health: ${calcHealth(wA, moveB)}`);
+    const turn2 = `${wB.name} performs ${moveB.name} on ${wA.name}. ${wA.name}'s health: ${calcHealth(wA, moveB)}`;
+    console.log(turn2);
 
     // if the wrestler's health reaches 0 
     // end the move, round, and match
@@ -105,6 +108,13 @@ const round = (wA, wB) => {
     }
 };
 
+/*
+ * Simulate each match two wrestlers
+ * param: wA, wrestler A
+ * param: wB, wrestler B
+ * param: roundCount, the current round number
+ * returns: display the moves performed and the health status of both wrestlers after each turn
+ */
 const match = (wA, wB, roundCount) => {
     console.log(`------------Round ${roundCount}--------------`);
     const winner = round(wA, wB);
@@ -130,11 +140,20 @@ const tournament = (wArray, healthArray) => {
 
     if (wArray.length == 4) {
         console.log(`Match 1: ${wArray[0].name} vs. ${wArray[1].name}`);
+        // display wrestler names on card
+        document.querySelector('#wA').innerHTML = `${wArray[0].name}`;
+        document.querySelector('#wB').innerHTML = `${wArray[1].name}`;
+
+        // display info in dropdown
+        document.querySelector('#match1Details').innerHTML = `Match 1: ${wArray[0].name} vs. ${wArray[1].name}<br>`;
         match(wArray[0], wArray[1], 1);
 
         console.log("\n\n");
 
         console.log(`Match 2: ${wArray[2].name} vs. ${wArray[3].name}`);
+        document.querySelector('#match2Details').innerHTML = `Match 2: ${wArray[2].name} vs. ${wArray[3].name}<br>`;
+        document.querySelector('#wC').innerHTML = `${wArray[2].name}`;
+        document.querySelector('#wD').innerHTML = `${wArray[3].name}`;
         match(wArray[2], wArray[3], 1);
 
         // reset wrestler healths before the final match
@@ -146,43 +165,66 @@ const tournament = (wArray, healthArray) => {
         console.log("\n\n");
 
         console.log(`Match 3: ${matchWinners[0].name} vs. ${matchWinners[1].name}`);
+        document.querySelector('#match3Details').innerHTML = `Match 3: ${matchWinners[0].name} vs. ${matchWinners[1].name}`;
+        document.querySelector('#wE').innerHTML = `${matchWinners[0].name}`;
+        document.querySelector('#wF').innerHTML = `${matchWinners[1].name}`;
         const finalWinner = match(matchWinners[0], matchWinners[1], 1);
 
         // console.log(finalWinner);
         console.log(`${finalWinner.name} wins the tournament`);
+        document.querySelector('#winner').innerHTML = `${finalWinner.name}`;
     }
     else if (wArray.length == 3) {
         console.log(`Match 1: ${wArray[0].name} vs. ${wArray[1].name}`);
+        document.querySelector('#match1Details').innerHTML = `Match 1: ${wArray[0].name} vs. ${wArray[1].name}<br>`;
+        document.querySelector('#wA').innerHTML = `${wArray[0].name}`;
+        document.querySelector('#wB').innerHTML = `${wArray[1].name}`;
         match(wArray[0], wArray[1], 1);
 
         console.log("\n\n");
 
         console.log(`Match 2: ${wArray[2].name}`);
+        document.querySelector('#match2Details').innerHTML = `Match 2: ${wArray[2].name}<br>`;
         console.log(`No opponent, ${wArray[2].name} automatically advances to next match`);
+        document.querySelector('#match2Details').innerHTML += `No opponent, ${wArray[2].name} automatically advances to next match`;
+        document.querySelector('#wC').innerHTML = `${wArray[2].name}`;
         matchWinners.push(wArray[2]);
 
         console.log("\n\n");
 
         console.log(`Match 3: ${matchWinners[0].name} vs. ${matchWinners[1].name}`);
+        document.querySelector('#match3Details').innerHTML = `Match 3: ${matchWinners[0].name} vs. ${matchWinners[1].name}`;
+        document.querySelector('#wE').innerHTML = `${matchWinners[0].name}`;
+        document.querySelector('#wF').innerHTML = `${matchWinners[1].name}`;
         const finalWinner = match(matchWinners[0], matchWinners[1], 1);
 
         console.log(`${finalWinner.name} wins the tournament!`);
+        document.querySelector('#winner').innerHTML = `${finalWinner.name}`;
     }
     else if (wArray.length == 2) {
         console.log(`Match 1: ${wArray[0].name} vs. ${wArray[1].name}`);
+        document.querySelector('#match1Details').innerHTML = `Match 1: ${wArray[0].name} vs. ${wArray[1].name}<br>`;
+        document.querySelector('#wA').innerHTML = `${wArray[0].name}`;
+        document.querySelector('#wB').innerHTML = `${wArray[1].name}`;
+
         // first/final match
         const finalWinner = match(wArray[0], wArray[1], 1);;
         console.log(`${finalWinner.name} wins the tournament!`);
+        document.querySelector('#winner').innerHTML = `${finalWinner.name}`;
     }
     else if (wArray.length == 1) {
         console.log('Only one wrestler showed up.');
-        console.log(`${wArray[0].name} automatically wins the tournament!`)
+        document.querySelector('#match1Details').innerHTML = `Only one wrestler showed up.<br>`;
+        console.log(`${wArray[0].name} automatically wins the tournament!`);
+        document.querySelector('#match1Details').innerHTML += `${wArray[0].name} automatically wins the tournament!`;
+        document.querySelector('#wA').innerHTML = `${wArray[0].name}`;
+        document.querySelector('#winner').innerHTML = `${wArray[0].name}`;
     }
     // if the array is empty
     else if (wArray.length == 0) {
         console.log('No wrestlers showed up.');
         console.log('No winner declared.')
-    } 
+    }
     // if the array has more than 4 wrestlers
     else {
         console.log('Too many wrestlers showed up.');
@@ -190,18 +232,32 @@ const tournament = (wArray, healthArray) => {
     }
 };
 
+
 /*
- * Read and return the data from a JSON file
- */
-const getDataFromJSON = (filename) => {
-    fetch(filename)
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            myArray = data;
-            return data;
-        });
-}
+* Read and return the data from a JSON file
+* param: filename, the name of the JSON file
+* returns: the data from the JSON file and runs the main function with the data
+*/
+const handleFileUpload = (fileInput) => {
+    //https://gomakethings.com/how-to-upload-and-process-a-json-file-with-vanilla-js/
+    // if there is a file
+    if (fileInput.files.length > 0) {
+        const reader = new FileReader();
+        //
+        reader.onload = (e) => {
+            const text = e.target.result;
+            wrestlers = JSON.parse(text);
+            // console.log(text);
+            // console.log(wrestlers);
+            // run the tournament with the uploaded wrestlers
+            main(wrestlers);
+        };
+        reader.readAsText(fileInput.files[0]);
+    }
+    else {
+        return;
+    }
+};
 
 /*
  * Main function to run the tournaments with wrestler arrays of different lengths
@@ -215,18 +271,36 @@ const main = (array) => {
     // code from: https://www.geeksforgeeks.org/how-to-create-an-array-of-partial-objects-from-another-array-in-javascript/
     const originalHealths = array.map(({ name, health }) => ({ name, health }));
 
-    console.log(`\n\n----------Tournament: ${roster.length} wrestlers-----------\n`);
+    console.log(`\n----------Tournament: ${roster.length} wrestler(s)-----------`);
     tournament(roster, originalHealths);
 };
 
+/*
+ * On page load, have the file input display the file name when uploaded
+ * and setup the submit button to run the main function with the uploaded file
+ */
 window.onload = () => {
-    // main(wrestlers1);
-    // main(wrestlers2);
-    // main(wrestlers3);
     main(wrestlers4);
 
-    // getDataFromJSON('wrestlerArray.json');
-    // main(myArray);
-    // console.log(myArray);
+    // https://bulma.io/documentation/form/file/
+    const fileInput = document.querySelector("#fileUpload input[type=file]");
+    fileInput.onchange = () => {
+        if (fileInput.files.length > 0) {
+            const fileName = document.querySelector("#fileUpload .file-name");
+            fileName.textContent = fileInput.files[0].name;
+        }
+    };
+
+    document.querySelector('#submitBtn').onclick = () => {
+        console.log("clicked");
+        if (fileInput.files.length > 0) {
+            handleFileUpload(fileInput);
+            console.log(wrestlers);
+            // main(wrestlers);
+        }
+        else {
+            console.log("No file uploaded.");
+        }
+    };
 };
 

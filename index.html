@@ -26,18 +26,18 @@
             <section id="fileUpload">
                 <h2 class="px-4">Upload a JSON file of wrestlers:</h2>
                 <!-- https://bulma.io/documentation/form/file/ -->
-                <div class="file has-name is-fullwidth px-4 theme-dark">
+                <div id="fileUpload" class="file has-name is-fullwidth px-4 theme-dark">
                     <label class="file-label">
-                        <input class="file-input" type="file" name="resume" />
-                        <span class="file-cta">
-                            <span class="file-icon">
-                                <i class="fas fa-upload"></i>
-                            </span>
-                            <span class="file-label"> Choose a file… </span>
+                      <input class="file-input" type="file" name="resume" />
+                      <span class="file-cta">
+                        <span class="file-icon">
+                          <i class="fas fa-upload"></i>
                         </span>
-                        <span class="file-name"> filename.json </span>
+                        <span class="file-label"> Choose a file… </span>
+                      </span>
+                      <span class="file-name is-color-warning"> No file uploaded </span>
                     </label>
-                </div>
+                  </div>
             </section>
             <section id="submitBtn">
                 <!-- https://bulma.io/documentation/elements/button/ -->
@@ -62,10 +62,7 @@
                                     <div class="dropdown-menu" id="dropdown-menu1" role="menu">
                                         <div class="dropdown-content">
                                             <div class="dropdown-item">
-                                                <p id="match1Details">
-                                                    Match details.
-                                                    Moves made and health status each round.
-                                                </p>
+                                                <p id="match1Details">No match details.</p>
                                             </div>
                                         </div>
                                     </div>
@@ -75,9 +72,9 @@
                         <div class="card-content">
                             <div class="content">
                                 <div class="column">
-                                    <p id="wA" class="is-size-6 is-color-warning">Wrestler 1</p>
+                                    <p id="wA" class="is-size-6">______</p>
                                     <p class="is-size-6">vs</p>
-                                    <p id="wB" class="is-size-6">Wrestler 2</p>
+                                    <p id="wB" class="is-size-6">______</p>
                                 </div>
                             </div>
                         </div>
@@ -96,10 +93,7 @@
                                     <div class="dropdown-menu" id="dropdown-menu1" role="menu">
                                         <div class="dropdown-content">
                                             <div class="dropdown-item">
-                                                <p id="match2Details">
-                                                    Match details.
-                                                    Moves made and health status each round.
-                                                </p>
+                                                <p id="match2Details">No match details.</p>
                                             </div>
                                         </div>
                                     </div>
@@ -109,9 +103,9 @@
                         <div class="card-content">
                             <div class="content">
                                 <div class="column">
-                                    <p id="wA" class="is-size-6 is-color-warning">Wrestler 1</p>
+                                    <p id="wC" class="is-size-6">______</p>
                                     <p class="is-size-6">vs</p>
-                                    <p id="wB" class="is-size-6">Wrestler 2</p>
+                                    <p id="wD" class="is-size-6">______</p>
                                 </div>
                             </div>
                         </div>
@@ -132,10 +126,7 @@
                                     <div class="dropdown-menu" id="dropdown-menu1" role="menu">
                                         <div class="dropdown-content">
                                             <div class="dropdown-item">
-                                                <p id="match3Details">
-                                                    Match details.
-                                                    Moves made and health status each round.
-                                                </p>
+                                                <p id="match3Details">No match details.</p>
                                             </div>
                                         </div>
                                     </div>
@@ -145,9 +136,9 @@
                         <div class="card-content">
                             <div class="content">
                                 <div class="column">
-                                    <p id="wA" class="is-size-6 is-color-warning">Wrestler 1</p>
+                                    <p id="wE" class="is-size-6">______</p>
                                     <p class="is-size-6">vs</p>
-                                    <p id="wB" class="is-size-6">Wrestler 2</p>
+                                    <p id="wF" class="is-size-6">______</p>
                                 </div>
                             </div>
                         </div>
@@ -163,8 +154,8 @@
                         </header>
                         <div class="card-content">
                             <div class="content">
-                                <p id="wA" class="is-size-6 is-color-warning">
-                                    Wrestler 1
+                                <p id="winner" class="is-size-6 is-color-warning">
+                                    ______
                                 </p>
                             </div>
                         </div>
