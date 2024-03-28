@@ -221,7 +221,7 @@ const tournament = (wArray, healthArray) => {
 
         console.log("\n");
         console.log(`${finalWinner.name} wins the tournament`);
-        document.querySelector('#winner').innerHTML = `${finalWinner.name}`;
+        document.querySelector('#winner').innerHTML = `<i class="fa-solid fa-crown is-color-warning"></i> ${finalWinner.name}`;
     }
     else if (wArray.length == 3) {
         console.log(`Match 1: ${wArray[0].name} vs. ${wArray[1].name}`);
@@ -259,7 +259,7 @@ const tournament = (wArray, healthArray) => {
         document.querySelector('#match3Details').innerHTML = getMatchDetails(3).join('<br>');
 
         console.log(`${finalWinner.name} wins the tournament!`);
-        document.querySelector('#winner').innerHTML = `${finalWinner.name}`;
+        document.querySelector('#winner').innerHTML = `<i class="fa-solid fa-crown is-color-warning"></i> ${finalWinner.name}`;
     }
     else if (wArray.length == 2) {
         console.log(`Match 1: ${wArray[0].name} vs. ${wArray[1].name}`);
@@ -274,7 +274,7 @@ const tournament = (wArray, healthArray) => {
 
         // display match details in the dropdowns
         document.querySelector('#match1Details').innerHTML = getMatchDetails(1).join('<br>');
-        document.querySelector('#winner').innerHTML = `${finalWinner.name}`;
+        document.querySelector('#winner').innerHTML = `<i class="fa-solid fa-crown is-color-warning"></i> ${finalWinner.name}`;
     }
     else if (wArray.length == 1) {
         console.log('Only one wrestler showed up.');
@@ -282,7 +282,7 @@ const tournament = (wArray, healthArray) => {
         console.log(`${wArray[0].name} automatically wins the tournament!`);
         document.querySelector('#match1Details').innerHTML += `${wArray[0].name} automatically wins the tournament!`;
         document.querySelector('#wA').innerHTML = `${wArray[0].name}`;
-        document.querySelector('#winner').innerHTML = `${wArray[0].name}`;
+        document.querySelector('#winner').innerHTML = `<i class="fa-solid fa-crown is-color-warning"></i> ${wArray[0].name}`;
     }
     // if the array is empty
     else if (wArray.length == 0) {
