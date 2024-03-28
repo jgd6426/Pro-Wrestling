@@ -5,6 +5,37 @@ let wrestlers = [];
 // Array to store the winning wrestler of each match to then go against each other
 let matchWinners = [];
 
+let matchDetails = [];
+
+// go through the matchDetails array and return the details for a given match and all the rounds in that match
+const getMatchDetails = (matchNum) => {
+    let match = [];
+    let indexStart;
+    let indexEnd;
+
+    // go through the matchDetails array and find the start of the match
+    for (let i = 0; i < matchDetails.length; i++) {
+        if (matchDetails[i].includes(`Match ${matchNum}`)) {
+            indexStart = i;
+        }
+    }
+
+    // based on the start of the match, find the end of the match
+    for (let i = indexStart; i < matchDetails.length; i++) {
+        if (matchDetails[i].includes(`wins`)) {
+            indexEnd = i + 1;
+            break;
+        }
+    }
+    
+    // go through the matchDetails array and get the details for the match
+    for (let j = indexStart; j < indexEnd; j++) {
+        match.push(matchDetails[j]);
+    }
+
+    return match;
+};
+
 /*
  * Choose a random move from a given wrestler object
  * param: wrestler 
@@ -50,10 +81,12 @@ const calcHealth = (wrestler, move) => {
         // if chance of 0, move fails
         if (chance != 1) {
             console.log(`${move.name} failed.`);
+            matchDetails.push(`${move.name} failed.`);
             return wrestler.health;
         }
         else {
-            console.log(`${move.name} successful.`)
+            console.log(`${move.name} successful.`);
+            matchDetails.push(`${move.name} successful.`);
         }
     }
     // All other moves including finisher move if wrestler's health is <= 45 or the chance = 1/succeeds
@@ -79,12 +112,14 @@ const round = (wA, wB) => {
     const moveA = randomMove(wA);
     const turn1 = `${wA.name} performs ${moveA.name} on ${wB.name}. ${wB.name}'s health: ${calcHealth(wB, moveA)}`;
     console.log(turn1);
+    matchDetails.push(turn1);
 
     // if the wrestler's health reaches 0 
     // end the move, round, and match
     // declare the winner
     if (wB.health == 0) {
         console.log(`${wB.name}'s health is below 0. ${wA.name} wins!`);
+        matchDetails.push(`${wB.name}'s health is below 0. ${wA.name} wins!`);
         // add the winning wrestler the winners array
         matchWinners.push(wA);
         // return the winning wrestler object
@@ -95,12 +130,14 @@ const round = (wA, wB) => {
     const moveB = randomMove(wB);
     const turn2 = `${wB.name} performs ${moveB.name} on ${wA.name}. ${wA.name}'s health: ${calcHealth(wA, moveB)}`;
     console.log(turn2);
+    matchDetails.push(turn2);
 
     // if the wrestler's health reaches 0 
     // end the move, round, and match
     // declare the winner
     if (wA.health == 0) {
         console.log(`${wA.name}'s health is below 0. ${wB.name} wins!`);
+        matchDetails.push(`${wA.name}'s health is below 0. ${wB.name} wins!`);
         // add the winning wrestler the winners array
         matchWinners.push(wB);
         // return the winning wrestler object
@@ -117,6 +154,7 @@ const round = (wA, wB) => {
  */
 const match = (wA, wB, roundCount) => {
     console.log(`------------Round ${roundCount}--------------`);
+    matchDetails.push(`------------Round ${roundCount}--------------`);
     const winner = round(wA, wB);
 
     if (wA.health <= 0 || wB.health <= 0) {
@@ -140,18 +178,20 @@ const tournament = (wArray, healthArray) => {
 
     if (wArray.length == 4) {
         console.log(`Match 1: ${wArray[0].name} vs. ${wArray[1].name}`);
+        matchDetails.push(`Match 1: ${wArray[0].name} vs. ${wArray[1].name}`);
+
         // display wrestler names on card
         document.querySelector('#wA').innerHTML = `${wArray[0].name}`;
         document.querySelector('#wB').innerHTML = `${wArray[1].name}`;
 
-        // display info in dropdown
-        document.querySelector('#match1Details').innerHTML = `Match 1: ${wArray[0].name} vs. ${wArray[1].name}<br>`;
         match(wArray[0], wArray[1], 1);
 
         console.log("\n\n");
+        matchDetails.push(`\n\n`);
 
         console.log(`Match 2: ${wArray[2].name} vs. ${wArray[3].name}`);
-        document.querySelector('#match2Details').innerHTML = `Match 2: ${wArray[2].name} vs. ${wArray[3].name}<br>`;
+        matchDetails.push(`Match 2: ${wArray[2].name} vs. ${wArray[3].name}`);
+
         document.querySelector('#wC').innerHTML = `${wArray[2].name}`;
         document.querySelector('#wD').innerHTML = `${wArray[3].name}`;
         match(wArray[2], wArray[3], 1);
@@ -160,56 +200,76 @@ const tournament = (wArray, healthArray) => {
         resetHealth(matchWinners[0], healthArray);
         resetHealth(matchWinners[1], healthArray);
 
-        // console.log("\n");
-        // console.log(`Winners: ${matchWinners[0].name}, ${matchWinners[0].health}, ${matchWinners[1].name}, ${matchWinners[1].health}`);
         console.log("\n\n");
+        matchDetails.push("\n\n");
 
         console.log(`Match 3: ${matchWinners[0].name} vs. ${matchWinners[1].name}`);
-        document.querySelector('#match3Details').innerHTML = `Match 3: ${matchWinners[0].name} vs. ${matchWinners[1].name}`;
+        matchDetails.push(`Match 3: ${matchWinners[0].name} vs. ${matchWinners[1].name}`);
+
         document.querySelector('#wE').innerHTML = `${matchWinners[0].name}`;
         document.querySelector('#wF').innerHTML = `${matchWinners[1].name}`;
         const finalWinner = match(matchWinners[0], matchWinners[1], 1);
 
-        // console.log(finalWinner);
+        // display match details in the dropdowns
+        document.querySelector('#match1Details').innerHTML = getMatchDetails(1).join('<br>');
+        document.querySelector('#match2Details').innerHTML = getMatchDetails(2).join('<br>');
+        document.querySelector('#match3Details').innerHTML = getMatchDetails(3).join('<br>');
+
+        console.log("\n");
         console.log(`${finalWinner.name} wins the tournament`);
         document.querySelector('#winner').innerHTML = `${finalWinner.name}`;
     }
     else if (wArray.length == 3) {
         console.log(`Match 1: ${wArray[0].name} vs. ${wArray[1].name}`);
-        document.querySelector('#match1Details').innerHTML = `Match 1: ${wArray[0].name} vs. ${wArray[1].name}<br>`;
+        matchDetails.push(`Match 1: ${wArray[0].name} vs. ${wArray[1].name}`);
+        
         document.querySelector('#wA').innerHTML = `${wArray[0].name}`;
         document.querySelector('#wB').innerHTML = `${wArray[1].name}`;
         match(wArray[0], wArray[1], 1);
 
         console.log("\n\n");
+        matchDetails.push("\n\n");
 
         console.log(`Match 2: ${wArray[2].name}`);
-        document.querySelector('#match2Details').innerHTML = `Match 2: ${wArray[2].name}<br>`;
-        console.log(`No opponent, ${wArray[2].name} automatically advances to next match`);
-        document.querySelector('#match2Details').innerHTML += `No opponent, ${wArray[2].name} automatically advances to next match`;
+        matchDetails.push(`Match 2: ${wArray[2].name}`);
+
+        console.log(`No opponent, ${wArray[2].name} wins and automatically advances to next match`);
+        matchDetails.push(`No opponent, ${wArray[2].name} wins and automatically advances to next match`);
+
         document.querySelector('#wC').innerHTML = `${wArray[2].name}`;
         matchWinners.push(wArray[2]);
 
         console.log("\n\n");
+        matchDetails.push("\n\n");
 
         console.log(`Match 3: ${matchWinners[0].name} vs. ${matchWinners[1].name}`);
-        document.querySelector('#match3Details').innerHTML = `Match 3: ${matchWinners[0].name} vs. ${matchWinners[1].name}`;
+        matchDetails.push(`Match 3: ${matchWinners[0].name} vs. ${matchWinners[1].name}`);
+
         document.querySelector('#wE').innerHTML = `${matchWinners[0].name}`;
         document.querySelector('#wF').innerHTML = `${matchWinners[1].name}`;
         const finalWinner = match(matchWinners[0], matchWinners[1], 1);
+
+        // display match details in the dropdowns
+        document.querySelector('#match1Details').innerHTML = getMatchDetails(1).join('<br>');
+        document.querySelector('#match2Details').innerHTML = getMatchDetails(2).join('<br>');
+        document.querySelector('#match3Details').innerHTML = getMatchDetails(3).join('<br>');
 
         console.log(`${finalWinner.name} wins the tournament!`);
         document.querySelector('#winner').innerHTML = `${finalWinner.name}`;
     }
     else if (wArray.length == 2) {
         console.log(`Match 1: ${wArray[0].name} vs. ${wArray[1].name}`);
-        document.querySelector('#match1Details').innerHTML = `Match 1: ${wArray[0].name} vs. ${wArray[1].name}<br>`;
+        matchDetails.push(`Match 1: ${wArray[0].name} vs. ${wArray[1].name}`);
+
         document.querySelector('#wA').innerHTML = `${wArray[0].name}`;
         document.querySelector('#wB').innerHTML = `${wArray[1].name}`;
 
         // first/final match
         const finalWinner = match(wArray[0], wArray[1], 1);;
         console.log(`${finalWinner.name} wins the tournament!`);
+
+        // display match details in the dropdowns
+        document.querySelector('#match1Details').innerHTML = getMatchDetails(1).join('<br>');
         document.querySelector('#winner').innerHTML = `${finalWinner.name}`;
     }
     else if (wArray.length == 1) {
@@ -232,7 +292,6 @@ const tournament = (wArray, healthArray) => {
     }
 };
 
-
 /*
 * Read and return the data from a JSON file
 * param: filename, the name of the JSON file
@@ -249,6 +308,7 @@ const handleFileUpload = (fileInput) => {
             wrestlers = JSON.parse(text);
             // console.log(text);
             // console.log(wrestlers);
+
             // run the tournament with the uploaded wrestlers
             main(wrestlers);
         };
@@ -273,6 +333,9 @@ const main = (array) => {
 
     console.log(`\n----------Tournament: ${roster.length} wrestler(s)-----------`);
     tournament(roster, originalHealths);
+
+    // console.log(matchDetails);
+    // console.log(getMatchDetails(1));
 };
 
 /*
@@ -280,7 +343,7 @@ const main = (array) => {
  * and setup the submit button to run the main function with the uploaded file
  */
 window.onload = () => {
-    main(wrestlers4);
+    // main(wrestlers4);
 
     // https://bulma.io/documentation/form/file/
     const fileInput = document.querySelector("#fileUpload input[type=file]");
@@ -292,11 +355,8 @@ window.onload = () => {
     };
 
     document.querySelector('#submitBtn').onclick = () => {
-        console.log("clicked");
         if (fileInput.files.length > 0) {
             handleFileUpload(fileInput);
-            console.log(wrestlers);
-            // main(wrestlers);
         }
         else {
             console.log("No file uploaded.");
