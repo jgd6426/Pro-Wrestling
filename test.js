@@ -1,4 +1,4 @@
-// Asked ChatGPT to provide wrestler objects for testing purposes
+// Asked ChatGPT to provide wrestler info to create objects for testing purposes
 
 const wrestlers4 = [
     {

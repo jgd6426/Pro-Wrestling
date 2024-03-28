@@ -7,7 +7,11 @@ let matchWinners = [];
 
 let matchDetails = [];
 
-// go through the matchDetails array and return the details for a given match and all the rounds in that match
+/*
+ * Give the details for a given match number from the matchDetails array
+ * param: matchNum, the match number
+ * returns: match details
+ */
 const getMatchDetails = (matchNum) => {
     let match = [];
     let indexStart;
