@@ -10,6 +10,8 @@ Hover over the "..." button on each match card to see more details about the rou
 
 All tournament details are also logged in the console similar to the sample output in the instructions.
 
+If you don't have your own array, you can use the wrestlerArray.json file in this project to test it out.
+
 ### Front End Mockup
 <img width="730" alt="Screenshot 2024-03-27 at 3 43 56 PM" src="https://github.com/jgd6426/Pro-Wrestling/assets/100483381/dce73a64-4f7e-46f6-a801-646716d4cc5d">
 
